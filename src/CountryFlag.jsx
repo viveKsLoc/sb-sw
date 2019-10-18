@@ -9,6 +9,7 @@ export default class CountryFlag extends Component {
         <label>Region or country<div/>
         <ReactFlagsSelect
           defaultCountry="IN"
+          countries={["AF", "IN"]}
         />
         </label>
       </div>
