@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import JSXAddon from 'storybook-addon-jsx';
 import { setAddon, storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
 
 import CountryFlag from '../CountryFlag';
 
