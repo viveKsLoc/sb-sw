@@ -35,13 +35,15 @@ export default class SelectCountryFlag extends Component {
             <div>
                 <div>
                     <i>WORLDWIDE</i>
+                    <hr />
                     <div>
                         <img alt="" src={this.state.image} height="12" width="16" />
                         <i>{this.state.text}</i>
                     </div>
                 </div>
-                <div>
+                <div style={{ marginTop: '40px' }}>
                     <i>ASIA</i>
+                    <hr />
                     {this.state.data.map((obj, i) => {
                         return obj.region === 'Asia' ?
                             (
@@ -51,16 +53,6 @@ export default class SelectCountryFlag extends Component {
                                 </div>
                             )
                             :   null
-                    })}
-                </div>
-                <div>
-                    <i>MIDDLE EAST</i>
-                    {this.state.data.map((obj,i) => {
-                        return (
-                            <div key={obj.name}>
-                                {obj.name}
-                            </div>
-                        )
                     })}
                 </div>
             </div>
