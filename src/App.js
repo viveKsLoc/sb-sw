@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // import CountryFlag from './CountryFlag';
 // import ImageOverlay from './ImageOverlay';
-import SelectCountryFlag from './SelectCountryFlag';
+import CountryFlagGlobal from './CountryFlagGlobal';
 
 export default class App extends Component {
     render() {
@@ -10,7 +10,7 @@ export default class App extends Component {
             <div>
                 {/* <CountryFlag />
                 <ImageOverlay /> */}
-                <SelectCountryFlag />
+                <CountryFlagGlobal />
             </div>
         )
     }

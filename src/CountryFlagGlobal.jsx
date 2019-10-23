@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import logo from './logo.svg';
 
-export default class SelectCountryFlag extends Component {
+export default class CountryFlagGlobal extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
             text: 'Global Site',
-            image: ''
+            image: logo
         }
     }
 

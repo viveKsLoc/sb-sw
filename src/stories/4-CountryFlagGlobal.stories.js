@@ -4,12 +4,12 @@ import JSXAddon from 'storybook-addon-jsx';
 import { setAddon, storiesOf, addParameters } from '@storybook/react';
 import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
 
-import SelectCountryFlag from '../SelectCountryFlag.jsx';
+import CountryFlagGlobal from '../CountryFlagGlobal.jsx';
 
 setAddon(JSXAddon);
 
-const stories = storiesOf('SelectCountryFlag', module);
+const stories = storiesOf('CountryFlagGlobal', module);
 
 stories.addDecorator(withKnobs);
 
-stories.addWithJSX('Default', () => <SelectCountryFlag />)
+stories.addWithJSX('Default', () => <CountryFlagGlobal />);
