@@ -47,13 +47,27 @@ export default class LanguageSelect extends Component {
 
         return (
             <div className={classNames(classes)}>
-                <select onChange={this.handleOnChange}>
+                <label className={`${baseClassName}__label`}>Language</label>
+                <select className={`${baseClassName}__select`} onChange={this.handleOnChange}>
                 {
                     this.state.showAll
                     ?
-                        this.state.data.map((obj) => obj.languages.map((lang, i) => <option key={i} value={lang.name}>{lang.nativeName}</option>))
+                        this.state.data.map((obj) => obj.languages.map((lang, i) => <option
+                            className={`${baseClassName}__all-options`}
+                            key={i}
+                            value={lang.name}>
+                            {lang.nativeName}
+                            </option>
+                        ))
                     :
-                        options.map((obj, i) => <option key={i} value={obj.value}>{obj.name}</option>)
+                        options.map((obj, i) => <option
+                                className={`${baseClassName}__default-options`}
+                                key={i}
+                                value={obj.value}
+                            >
+                            {obj.name}
+                            </option>
+                        )
                 }
                 </select>
             </div>
