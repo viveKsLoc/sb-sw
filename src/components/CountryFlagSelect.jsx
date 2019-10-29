@@ -48,12 +48,26 @@ export default class CountryFlagSelect extends Component {
 
     return (
       <div className={classNames(classes)}>
-        <label>Region or country<div/>
-          <select onChange={this.handleOnChange}>
+        <label className={`${baseClassName}__label`}>Region or country<div/>
+          <select className={`${baseClassName}__select`} onChange={this.handleOnChange}>
           {
             this.state.showAll
-            ? this.state.data.map((obj, i) => <option key={i} value={obj.name}>{obj.name}</option>)
-            : options.map((obj, i) => <option key={i} value={obj.value}>{obj.name}</option>)
+            ? this.state.data.map((obj, i) => <option
+                  className={`${baseClassName}__all-options`}
+                  key={i}
+                  value={obj.name}
+                >
+                  {obj.name}
+                </option>
+              )
+            : options.map((obj, i) => <option
+                  className={`${baseClassName}__default-options`}
+                  key={i}
+                  value={obj.value}
+                >
+                  {obj.name}
+                </option>
+              )
           }
           </select>
         </label>

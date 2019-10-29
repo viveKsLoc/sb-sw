@@ -15,9 +15,9 @@ export default class LanguageSelect extends Component {
 
     callCountries = () => {
         fetch(`https://restcountries.eu/rest/v2/all`)
-        .then(response => response.json())
-        .then(data => this.setState({ data, showAll: true }))
-        .catch(e => console.log(e));
+        .then((response) => response.json())
+        .then((data) => this.setState({ data, showAll: true }))
+        .catch((e) => console.log(e));
     }
 
     handleOnChange = (e) => {
@@ -53,10 +53,11 @@ export default class LanguageSelect extends Component {
                     this.state.showAll
                     ?
                         this.state.data.map((obj) => obj.languages.map((lang, i) => <option
-                            className={`${baseClassName}__all-options`}
-                            key={i}
-                            value={lang.name}>
-                            {lang.nativeName}
+                                className={`${baseClassName}__all-options`}
+                                key={i}
+                                value={lang.name}
+                            >
+                                {lang.nativeName}
                             </option>
                         ))
                     :
@@ -65,7 +66,7 @@ export default class LanguageSelect extends Component {
                                 key={i}
                                 value={obj.value}
                             >
-                            {obj.name}
+                                {obj.name}
                             </option>
                         )
                 }

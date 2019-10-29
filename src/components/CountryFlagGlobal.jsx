@@ -23,7 +23,6 @@ export default class CountryFlagGlobal extends Component {
     }
 
     handleClick = (e) => {
-        console.log(e);
         let text = e.target.innerText;
         this.state.data.map((obj, i) => {
             return obj.name === text ? this.setState({
