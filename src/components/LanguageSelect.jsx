@@ -9,20 +9,36 @@ export default class LanguageSelect extends Component {
         super(props);
         this.state = {
             data: [],
-            showAll: false
+            showAll: false,
+            allOptions: []
         }
     }
 
     callCountries = () => {
         fetch(`https://restcountries.eu/rest/v2/all`)
         .then((response) => response.json())
-        .then((data) => this.setState({ data, showAll: true }))
+        .then((data) => {
+            let allOptions = [];
+            data.map((obj) => obj.languages.map((lang, i) => {
+                return allOptions.push({
+                    'value': `${lang.name}`,
+                    'name': `${lang.nativeName}`
+                })
+            }))
+            this.setState({
+                data,
+                showAll: true,
+                allOptions: this.state.allOptions.concat(allOptions)
+            })
+        })   
         .catch((e) => console.log(e));
     }
 
     handleOnChange = (e) => {
         if(e.target.value === 'All') {
             this.callCountries();
+        } else if((e.target.value === 'English' || e.target.value === 'Marati' || e.target.value === 'Hindi')) {
+            this.setState({ data: [], showAll: false, allOptions: [] })
         }
     }
 
@@ -42,7 +58,7 @@ export default class LanguageSelect extends Component {
             { value: "English", name: "English" },
             { value: "Hindi", name: "Hindi" },
             { value: "Marati", name: "Marati" },
-            { value: "All", name: "See All Languages" }
+            { value: "All", name: "See all languages" }
         ]
 
         return (
@@ -52,14 +68,22 @@ export default class LanguageSelect extends Component {
                 {
                     this.state.showAll
                     ?
-                        this.state.data.map((obj) => obj.languages.map((lang, i) => <option
+                        // this.state.data.map((obj) => obj.languages.map((lang, i) => <option
+                        //         className={`${baseClassName}__all-options`}
+                        //         key={i}
+                        //         value={lang.name}
+                        //     >
+                        //         {lang.nativeName}
+                        //     </option>
+                        // ))
+                        options.concat(this.state.allOptions).map((obj, i) => <option
                                 className={`${baseClassName}__all-options`}
                                 key={i}
-                                value={lang.name}
+                                value={obj.value}
                             >
-                                {lang.nativeName}
+                                {obj.name}
                             </option>
-                        ))
+                        )
                     :
                         options.map((obj, i) => <option
                                 className={`${baseClassName}__default-options`}

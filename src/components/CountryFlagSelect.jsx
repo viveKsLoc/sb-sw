@@ -9,20 +9,36 @@ export default class CountryFlagSelect extends Component {
     super(props);
     this.state = {
       data: [],
-      showAll: false
+      showAll: false,
+      allCountries: []
     }
   }
 
   callCountries = () => {
     fetch(`https://restcountries.eu/rest/v2/all`)
     .then((response) => response.json())
-    .then((data) => { this.setState({ data, showAll: true }) })
+    .then((data) => {
+      let allCountries = [];
+      data.map((obj, i) => {
+        return allCountries.push({
+          'value': `${obj.name}`,
+          'name': `${obj.name}`
+        })
+      })
+      this.setState({
+        data,
+        showAll: true,
+        allCountries: this.state.allCountries.concat(allCountries)
+      })
+    })
     .catch((e) => { console.log(e) })
   }
 
   handleOnChange = (e) => {
     if(e.target.value === 'All') {
       this.callCountries();
+    } else if(e.target.value === 'India' || e.target.value === 'Global') {
+      this.setState({ data: [], showAll: false, allCountries: [] })
     }
   }
 
@@ -52,15 +68,25 @@ export default class CountryFlagSelect extends Component {
           <select className={`${baseClassName}__select`} onChange={this.handleOnChange}>
           {
             this.state.showAll
-            ? this.state.data.map((obj, i) => <option
+            ?
+              // this.state.data.map((obj, i) => <option
+              //     className={`${baseClassName}__all-options`}
+              //     key={i}
+              //     value={obj.name}
+              //   >
+              //     {obj.name}
+              //   </option>
+              // )
+              options.concat(this.state.allCountries).map((obj, i) => <option
                   className={`${baseClassName}__all-options`}
                   key={i}
-                  value={obj.name}
+                  value={obj.value}
                 >
                   {obj.name}
                 </option>
               )
-            : options.map((obj, i) => <option
+            :
+              options.map((obj, i) => <option
                   className={`${baseClassName}__default-options`}
                   key={i}
                   value={obj.value}
