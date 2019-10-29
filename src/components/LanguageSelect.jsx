@@ -8,14 +8,22 @@ export default class LanguageSelect extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            showAll: false
         }
     }
 
-    componentDidMount = () => {
+    callCountries = () => {
         fetch(`https://restcountries.eu/rest/v2/all`)
-        .then((response) => response.json())
-        .then((data) => this.setState({ data }))
+        .then(response => response.json())
+        .then(data => this.setState({ data, showAll: true }))
+        .catch(e => console.log(e));
+    }
+
+    handleOnChange = (e) => {
+        if(e.target.value === 'All') {
+            this.callCountries();
+        }
     }
 
     render() {
@@ -30,11 +38,22 @@ export default class LanguageSelect extends Component {
             [parentClassName]: parentClassName
         }
 
+        let options = [
+            { value: "English", name: "English" },
+            { value: "Hindi", name: "Hindi" },
+            { value: "Marati", name: "Marati" },
+            { value: "All", name: "See All Languages" }
+        ]
+
         return (
             <div className={classNames(classes)}>
-                <select>
+                <select onChange={this.handleOnChange}>
                 {
-                    this.state.data.map((obj) => obj.languages.map((lang, i) => <option key={i} value={lang.name}>{lang.nativeName}</option>))
+                    this.state.showAll
+                    ?
+                        this.state.data.map((obj) => obj.languages.map((lang, i) => <option key={i} value={lang.name}>{lang.nativeName}</option>))
+                    :
+                        options.map((obj, i) => <option key={i} value={obj.value}>{obj.name}</option>)
                 }
                 </select>
             </div>
