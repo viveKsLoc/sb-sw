@@ -47,7 +47,7 @@ export default class LanguageSelect extends Component {
 
         return (
             <div className={classNames(classes)}>
-                <label className={`${baseClassName}__label`}>Language</label>
+                <label className={`${baseClassName}__label`}>Language</label><div/>
                 <select className={`${baseClassName}__select`} onChange={this.handleOnChange}>
                 {
                     this.state.showAll
