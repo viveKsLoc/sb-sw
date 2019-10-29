@@ -32,7 +32,11 @@ export default class LanguageSelect extends Component {
 
         return (
             <div className={classNames(classes)}>
-
+                <select>
+                {
+                    this.state.data.map((obj) => obj.languages.map((lang, i) => <option key={i} value={lang.name}>{lang.nativeName}</option>))
+                }
+                </select>
             </div>
         )
     }
