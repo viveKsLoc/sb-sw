@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/scss/react-flags-select.scss';
 
+import '../scss/2-CountryFlag.scss';
+
 export default class CountryFlag extends Component {
   static defaultProps = {}
 

@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import logo from '../logo.svg';
 
+import '../scss/3-CountryFlagGlobal.scss';
+
 export default class CountryFlagGlobal extends Component {
     static defaultProps = {}
 
@@ -11,14 +13,22 @@ export default class CountryFlagGlobal extends Component {
         this.state = {
             data: [],
             text: 'Global Site',
-            image: logo
+            image: logo,
+            showAllOfAsia: false
         }
     }
 
     componentDidMount = () => {
         fetch(`https://restcountries.eu/rest/v2/all`)
         .then((response) => response.json())
-        .then((data) => this.setState({ data }))
+        .then((data) => {
+            let asiaData = [];
+            data.map((obj, i) => {
+                return obj.region === 'Asia' ? asiaData.push(obj) : null
+            })
+            let asia = asiaData.slice(0,10);
+            this.setState({ data: asia })
+        })
         .catch((e) => { console.log(e) })
     }
 
@@ -30,6 +40,24 @@ export default class CountryFlagGlobal extends Component {
                 text: obj.name
             }) : null
         })
+    }
+
+    callAllOfAsia = () => {
+        fetch(`https://restcountries.eu/rest/v2/all`)
+        .then((response) => response.json())
+        .then((data) => {
+            this.setState({ data: [] })
+            let asiaData = [];
+            data.map((obj, i) => {
+                return obj.region === 'Asia' ? asiaData.push(obj) : null
+            })
+            this.setState({ data: asiaData, showAllOfAsia: true })
+        })
+        .catch((e) => { console.log(e) })
+    }
+
+    handleAllOfAsia = () => {
+        this.callAllOfAsia();
     }
 
     render() {
@@ -60,15 +88,19 @@ export default class CountryFlagGlobal extends Component {
                     <i className={`${baseClassName}__asia-header`}>ASIA</i>
                     <hr className={`${baseClassName}__asia-divider`} />
                     {this.state.data.map((obj, i) => {
-                        return obj.region === 'Asia' ?
-                            (
-                                <div className={`${baseClassName}__asia-content`} key={obj.name} onClick={this.handleClick}>
-                                    <img className={`${baseClassName}__asia-content-image`} alt="" src={obj.flag} height="12" width="16" />
-                                    <i className={`${baseClassName}__asia-content-text`}>{obj.name}</i>
-                                </div>
-                            )
-                            :   null
+                        return (
+                            <div className={`${baseClassName}__asia-content`} key={i} onClick={this.handleClick}>
+                                <img className={`${baseClassName}__asia-content-image`} alt="" src={obj.flag} height="12" width="16" />
+                                <i className={`${baseClassName}__asia-content-text`}>{obj.name}</i>
+                            </div>
+                        )
                     })}
+                    {this.state.showAllOfAsia ? null
+                        :   <div className={`${baseClassName}__all-content`} onClick={this.handleAllOfAsia}>
+                                <img className={`${baseClassName}__all-content-image`} alt="" src={logo} height="12" width="16" />
+                                <i className={`${baseClassName}__all-content-text`}>All of asia</i>
+                            </div>
+                    }
                 </div>
             </div>
         )

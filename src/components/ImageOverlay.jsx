@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import logo from '../logo.svg'
+import logo from '../logo.svg';
+
+import '../scss/5-ImageOverlay.scss';
 
 export default class ImageOverlay extends Component {
     static defaultProps = {}

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import '../scss/6-LanguageSelect.scss';
+
 export default class LanguageSelect extends Component {
     static defaultProps = {};
 
