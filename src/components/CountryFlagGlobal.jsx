@@ -76,6 +76,10 @@ export default class CountryFlagGlobal extends Component {
 
         return (
             <div className={classNames(classes)}>
+                <div className={`${baseClassName}__side-content`}>
+                    <img className={`${baseClassName}__side-content-image`} alt="" src={logo} height="250" width="250" /><div/>
+                    <i className={`${baseClassName}__side-content-text`}>Create an account to receive great stories in your inbox, personalize your bookshelf and get access to free downloads.</i>
+                </div>
                 <div className={`${baseClassName}__world-wide`}>
                     <i className={`${baseClassName}__world-wide-header`}>WORLDWIDE</i>
                     <hr className={`${baseClassName}__world-wide-divider`} />
