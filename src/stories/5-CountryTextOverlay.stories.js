@@ -3,11 +3,11 @@ import JSXAddon from 'storybook-addon-jsx';
 import { setAddon, storiesOf } from '@storybook/react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
-import ImageOverlay from '../components/ImageOverlay.jsx';
+import CountryTextOverlay from '../components/CountryTextOverlay.jsx';
 
 setAddon(JSXAddon);
 
-const stories = storiesOf('ImageOverlay', module);
+const stories = storiesOf('CountryTextOverlay', module);
 
 stories.addDecorator(withKnobs);
 
@@ -15,7 +15,7 @@ stories.addWithJSX('Default', () => {
     const disabled = boolean('Disabled?');
 
     return (
-        <ImageOverlay
+        <CountryTextOverlay
             disabled={disabled}
         />
     )

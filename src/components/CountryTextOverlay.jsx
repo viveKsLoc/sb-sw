@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import logo from '../logo.svg';
 
-import '../scss/5-ImageOverlay.scss';
+import '../scss/5-CountryTextOverlay.scss';
 
-export default class ImageOverlay extends Component {
+export default class CountryTextOverlay extends Component {
     static defaultProps = {}
 
     constructor(props) {
@@ -37,6 +37,6 @@ export default class ImageOverlay extends Component {
     }
 }
 
-ImageOverlay.propTypes = {
+CountryTextOverlay.propTypes = {
     disbaled: PropTypes.bool
 }

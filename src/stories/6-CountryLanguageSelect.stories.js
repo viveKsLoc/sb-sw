@@ -3,18 +3,18 @@ import { setAddon, storiesOf } from '@storybook/react';
 import JSXAddon from 'storybook-addon-jsx';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
-import LanguageSelect from '../components/LanguageSelect';
+import CountryLanguageSelect from '../components/CountryLanguageSelect';
 
 setAddon(JSXAddon);
 
-const stories = storiesOf('LanguageSelect', module);
+const stories = storiesOf('CountryLanguageSelect', module);
 
 stories.addDecorator(withKnobs);
 
 stories.addWithJSX('Default', () => {
     const disabled = boolean('Disabled?');
 
-    return <LanguageSelect
+    return <CountryLanguageSelect
         disabled={disabled}
     />
 });
