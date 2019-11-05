@@ -11,30 +11,14 @@ export default class CountryFlagGlobal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
             text: 'Global Site',
-            image: logo,
-            showAllOfAsia: false
+            image: logo
         }
-    }
-
-    componentDidMount = () => {
-        fetch(`https://restcountries.eu/rest/v2/all`)
-        .then((response) => response.json())
-        .then((data) => {
-            let asiaData = [];
-            data.map((obj, i) => {
-                return obj.region === 'Asia' ? asiaData.push(obj) : null
-            })
-            let asia = asiaData.slice(0,10);
-            this.setState({ data: asia })
-        })
-        .catch((e) => { console.log(e) })
     }
 
     handleClick = (e) => {
         let text = e.target.innerText;
-        this.state.data.map((obj, i) => {
+        this.props.countries.map((obj, i) => {
             return obj.name === text ? this.setState({
                 image: obj.flag,
                 text: obj.name
@@ -42,22 +26,8 @@ export default class CountryFlagGlobal extends Component {
         })
     }
 
-    callAllOfAsia = () => {
-        fetch(`https://restcountries.eu/rest/v2/all`)
-        .then((response) => response.json())
-        .then((data) => {
-            this.setState({ data: [] })
-            let asiaData = [];
-            data.map((obj, i) => {
-                return obj.region === 'Asia' ? asiaData.push(obj) : null
-            })
-            this.setState({ data: asiaData, showAllOfAsia: true })
-        })
-        .catch((e) => { console.log(e) })
-    }
-
     handleAllOfAsia = () => {
-        this.callAllOfAsia();
+        this.props.callAllOfAsia();
     }
 
     render() {
@@ -65,7 +35,8 @@ export default class CountryFlagGlobal extends Component {
 
         let {
             parentClassName,
-            disabled
+            disabled,
+            countries
         } = this.props;
 
         let classes = {
@@ -78,7 +49,7 @@ export default class CountryFlagGlobal extends Component {
             <div className={classNames(classes)}>
                 <div className={`${baseClassName}__side-content`}>
                     <img className={`${baseClassName}__side-content-image`} alt="" src={logo} height="250" width="250" /><div/>
-                    <i className={`${baseClassName}__side-content-text`}>Create an account to receive great stories in your inbox, personalize your bookshelf and get access to free downloads.</i>
+                    <i className={`${baseClassName}__side-content-text`}>Some long text needs to go here.</i>
                 </div>
                 <div className={`${baseClassName}__world-wide`}>
                     <i className={`${baseClassName}__world-wide-header`}>WORLDWIDE</i>
@@ -91,7 +62,7 @@ export default class CountryFlagGlobal extends Component {
                 <div className={`${baseClassName}__asia`}>
                     <i className={`${baseClassName}__asia-header`}>ASIA</i>
                     <hr className={`${baseClassName}__asia-divider`} />
-                    {this.state.data.map((obj, i) => {
+                    {countries.map((obj, i) => {
                         return (
                             <div className={`${baseClassName}__asia-content`} key={i} onClick={this.handleClick}>
                                 <img className={`${baseClassName}__asia-content-image`} alt="" src={obj.flag} height="12" width="16" />
@@ -99,7 +70,7 @@ export default class CountryFlagGlobal extends Component {
                             </div>
                         )
                     })}
-                    {this.state.showAllOfAsia ? null
+                    {this.props.showAllOfAsia ? null
                         :   <div className={`${baseClassName}__all-content`} onClick={this.handleAllOfAsia}>
                                 <img className={`${baseClassName}__all-content-image`} alt="" src={logo} height="12" width="16" />
                                 <i className={`${baseClassName}__all-content-text`}>All of asia</i>
@@ -112,5 +83,6 @@ export default class CountryFlagGlobal extends Component {
 }
 
 CountryFlagGlobal.propTypes = {
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    countries: PropTypes.arrayOf(PropTypes.object)
 }
