@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-
-import ReactFlagsSelect from 'react-flags-select';
-import 'react-flags-select/scss/react-flags-select.scss';
+import Select from 'react-select';
 
 import '../scss/2-CountryFlag.scss';
 
@@ -13,8 +11,15 @@ export default class CountryFlag extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      data: []
     }
+  }
+
+  componentDidMount = () => {
+    fetch(`https://restcountries.eu/rest/v2/all`)
+    .then((res) => { return res.json() })
+    .then((data) => { this.setState({ data: data }) })
+    .catch((e) => { console.log(e) })
   }
 
   render() {
@@ -31,13 +36,17 @@ export default class CountryFlag extends Component {
       [`${baseClassName}--disabled`]: disabled
     }
 
+    const options = this.state.data.map((item,i) => {
+      return {
+        value: item.name,
+        label:  <div><img alt="" src={item.flag} height="14" width="20" />{item.name}</div>
+      }
+    })
+
     return (
       <div className={classNames(classes)}>
         <label className={`${baseClassName}__label`}>Region or country<div/>
-        <ReactFlagsSelect
-          defaultCountry="IN"
-          countries={["AF", "IN"]}
-        />
+          <Select options={options} />
         </label>
       </div>
     )
