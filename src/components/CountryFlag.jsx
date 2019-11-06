@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import logo from '../logo.svg';
 
 import '../scss/2-CountryFlag.scss';
 
@@ -11,7 +12,8 @@ export default class CountryFlag extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      isClicked: false
     }
   }
 
@@ -22,8 +24,19 @@ export default class CountryFlag extends Component {
     .catch((e) => { console.log(e) })
   }
 
+  callAll = (e) => {
+    if(e) {
+      this.setState({ isClicked: true })
+    }
+  }
+
   render() {
     let baseClassName = "pb-country-flag";
+
+    let {
+      data,
+      isClicked
+    } = this.state;
 
     let {
       parentClassName,
@@ -36,17 +49,53 @@ export default class CountryFlag extends Component {
       [`${baseClassName}--disabled`]: disabled
     }
 
-    const options = this.state.data.map((item,i) => {
+    console.log(this.state.data);
+
+    const defaultValue = [
+      {
+        value: 'India',
+        label: <div><img alt="" src="https://restcountries.eu/data/ind.svg" height="14" width="20" />India</div>
+      }
+    ]
+
+    const defaultOptions = [
+      {
+        value: 'India',
+        label: <div><img alt="" src="https://restcountries.eu/data/ind.svg" height="14" width="20" />India</div>
+      },
+      {
+        value: 'Global',
+        label: <div><img alt="" src={logo} height="14" width="20" />Global</div>
+      },
+      {
+        value: 'Show All Countries or Regions',
+        label: <div onClick={this.callAll}>Show All Countries or Regions</div>
+      }
+    ]
+
+    const options = data.map((item,i) => {
       return {
         value: item.name,
         label:  <div><img alt="" src={item.flag} height="14" width="20" />{item.name}</div>
       }
     })
 
+    let globalOption = [
+      {
+        value: 'Global',
+        label: <div><img alt="" src={logo} height="14" width="20" />Global</div>
+      }
+    ]
+
+    let allOptions = globalOption.concat(options);
+
     return (
       <div className={classNames(classes)}>
         <label className={`${baseClassName}__label`}>Region or country<div/>
-          <Select options={options} />
+          <Select
+            defaultValue={defaultValue}
+            options={isClicked ? allOptions : defaultOptions}
+          />
         </label>
       </div>
     )
