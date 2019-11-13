@@ -54,18 +54,18 @@ export default class CountryFlag extends Component {
     const defaultValue = [
       {
         value: 'India',
-        label: <div><img alt="" src="https://restcountries.eu/data/ind.svg" height="14" width="20" />India</div>
+        label: <div><img className="flag-component__image" alt="" src="https://restcountries.eu/data/ind.svg" height="14" width="20" />India</div>
       }
     ]
 
     const defaultOptions = [
       {
         value: 'India',
-        label: <div><img alt="" src="https://restcountries.eu/data/ind.svg" height="14" width="20" />India</div>
+        label: <div className="flag-component"><img className="flag-component__image" alt="" src="https://restcountries.eu/data/ind.svg" height="14" width="20" /><span className="flag-component__content">India</span></div>
       },
       {
         value: 'Global',
-        label: <div><img alt="" src={logo} height="14" width="20" />Global</div>
+        label: <div className="flag-component"><img className="flag-component__image" alt="" src={logo} height="14" width="20" />Global</div>
       },
       {
         value: 'Show All Countries or Regions',
@@ -89,12 +89,19 @@ export default class CountryFlag extends Component {
 
     let allOptions = globalOption.concat(options);
 
+    const colourStyles = {
+      control: styles => ({ ...styles,
+        backgroundColor: 'blue'
+      })
+    }
+
     return (
       <div className={classNames(classes)}>
         <label className={`${baseClassName}__label`}>Region or country<div/>
           <Select
             defaultValue={defaultValue}
             options={isClicked ? allOptions : defaultOptions}
+            styles={colourStyles}
           />
         </label>
       </div>

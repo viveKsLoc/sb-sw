@@ -8,8 +8,8 @@
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-flags-select": "^1.1.10",
     "react-scripts": "3.2.0",
+    "react-select": "^3.0.8",
     "util": "^0.12.1"
   },
   "scripts": {
@@ -44,7 +44,7 @@
     "@storybook/addon-links": "^5.2.4",
     "@storybook/addon-viewport": "^5.2.4",
     "@storybook/addons": "^5.2.4",
-    "@storybook/react": "^5.2.4",
+    "@storybook/react": "^5.2.5",
     "import": "^0.0.6",
     "storybook-addon-jsx": "^7.1.6"
   }
