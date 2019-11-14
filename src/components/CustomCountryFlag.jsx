@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import globe from '../flag-globe-blue.svg';
+import dropdown from '../icon-dropdown-black.svg';
 
 import '../scss/7-CustomCountryFlag.scss';
 
-class CustomCountryFlag extends React.Component {
+class CustomCountryFlag extends Component {
     static defaultProps = {}
 
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
             image: 'https://restcountries.eu/data/ind.svg',
             text: 'India',
             isClicked: false,
@@ -16,71 +19,117 @@ class CustomCountryFlag extends React.Component {
         }
     }
 
-    callAll = () => {
-        let allOptions = [{ name: 'Global', value: 'global', flag: '' }];
-        fetch(`https://restcountries.eu/rest/v2/all`)
-        .then((response) => response.json())
-        .then((data) => { this.setState({ data: allOptions.concat(data) }) })
-        .catch((e) => { console.log(e) })
-    }
-
     handleDivClick = (e) => {
-        this.setState({ isClicked: true })
+        if(this.state.isSelected) {
+            this.setState({ isClicked: false });
+        } else {
+            this.setState({ isClicked: true });
+        }
     }
 
     handleListClick = (e) => {
-        if(e.target.innerText === 'Show all countries or regions') {
-            this.setState({ isSelected: true })
-            this.callAll()
+        if(e.target.innerText === 'See all countries and regions') {
+            this.props.callAll();
+            this.setState({
+                isClicked: false,
+                image: e.target.children[0].src,
+                text: e.target.innerText,
+                isSelected: true
+            })
+        } else {
+            this.setState({
+                isClicked: false,
+                image: e.target.children[0].src,
+                text: e.target.innerText
+            })
         }
-        this.setState({ image: e.target.children[0].src });
-        this.setState({ text: e.target.innerText })
+    }
+
+    handleListAllClick = (e) => {
+        this.setState({
+            image: e.target.children[0].src,
+            text: e.target.innerText,
+            isSelected: false
+        });
     }
 
     render() {
+        const baseClassName = "pb-custom-flag-select";
+
+        let {
+            parentClassName,
+            disabled,
+            data
+        } = this.props;
+
+        let classes = {
+            [baseClassName]: true,
+            [parentClassName]: parentClassName,
+            [`${baseClassName}__content`]: disabled
+        };
 
         const defaultOptions = [
-            { name: 'India', value: 'india', flag: 'https://restcountries.eu/data/ind.svg' },
-            { name: 'Global', value: 'global', flag: '' },
-            { name: 'Show all countries or regions', value: 'all', flag: '' }
-        ]
+            { name: 'India', flag: 'https://restcountries.eu/data/ind.svg' },
+            { name: 'Global', flag: globe },
+            { name: 'See all countries and regions', flag: '' }
+        ];
 
         return (
-            <div>
-                <div onClick={this.handleDivClick}>
-                    <img alt="" src={this.state.image} height="10" width="14" />
-                    <span>{this.state.text}</span>
-                    <i className="fa fa-angle-down"></i>
+            <div className={classNames(classes)}>
+                <div className={`${baseClassName}__content`} onClick={this.handleDivClick}>
+                    <img className={`${baseClassName}__content--image`} alt="" src={this.state.image} height='10' width='10' />
+                    <span className={`${baseClassName}__content--text`}>{this.state.text}</span>
+                    <img className={`${baseClassName}__content--arrow`} alt="" src={dropdown} height='10' width='10' />
                 </div>
-                <ul id="countries">
                 {
-                    this.state.isClicked && !this.state.isSelected ?
-                    defaultOptions.map((item, index) => {
-                        return (
-                            <li key={index} onClick={this.handleListClick} value={item.value}>
-                                <img alt="" src={item.flag} height="10" width="14" />
-                                {item.name}
-                            </li>
-                        )
-                    })
-                    :   null
+                    <div
+                        className={`${baseClassName}__countries`} 
+                        style={{ display: this.state.isClicked ? 'block' : 'none' }}
+                    >
+                    {
+                        this.state.isClicked ?
+                        defaultOptions.map((item, index) => {
+                            return (
+                                <li className={`${baseClassName}__countries--list`} key={index} onClick={this.handleListClick}>
+                                    <img className={`${baseClassName}__countries--image`} alt="" src={item.flag} height='10' width='10' />
+                                    {item.name}
+                                </li>
+                            )
+                        })
+                        :   null
+                    }
+                    </div>
                 }
                 {
-                    this.state.isSelected ?
-                    this.state.data.map((item, index) => {
-                        return (
-                            <li key={index} style={{ listStyleType: "none",padding:'4px' }} onClick={this.handleListClick}>
-                                <img alt="" src={item.flag} height="10" width="14" />
-                                {item.name}
-                            </li>
-                        )
-                    })
-                    :   null
+                    <div
+                        className={`${baseClassName}__countries`}
+                        style={{ display: this.state.isSelected ? 'block' : 'none' }}
+                    >
+                    {
+                        this.state.isSelected ?
+                        data.map((item, index) => {
+                            return (
+                                <li className={`${baseClassName}__countries--list`} key={index} onClick={this.handleListAllClick}>
+                                    <img className={`${baseClassName}__countries--image`} alt="" src={item.flag} height='10' width='10' />
+                                    {item.name}
+                                </li>
+                            )
+                        })
+                        :   null
+                    }
+                    </div>
                 }
-                </ul>
             </div>
         )
     }
+}
+
+CustomCountryFlag.propTypes = {
+  disabled: PropTypes.bool,
+  align: PropTypes.oneOf([
+    'right',
+    'left'
+  ])
 }
 
 export default CustomCountryFlag;
