@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 
 import CountryFlag from './components/CountryFlag';
 import CountryFlagGlobal from './components/CountryFlagGlobal';
-import CountryFlagSelect from './components/CountryFlagSelect';
-import LanguageSelect from './components/LanguageSelect';
-import ImageOverlay from './components/ImageOverlay';
+import CountryLanguageSelect from './components/CountryLanguageSelect';
+import CountryTextOverlay from './components/CountryTextOverlay';
 
 export default class App extends Component {
     render() {
@@ -12,9 +11,8 @@ export default class App extends Component {
             <div>
                 <CountryFlag />
                 <CountryFlagGlobal />
-                <CountryFlagSelect />
-                <LanguageSelect />
-                <ImageOverlay />
+                <CountryLanguageSelect />
+                <CountryTextOverlay />
             </div>
         )
     }
