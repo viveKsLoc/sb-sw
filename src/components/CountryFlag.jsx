@@ -91,7 +91,7 @@ export default class CountryFlag extends Component {
 
     const colourStyles = {
       control: styles => ({ ...styles,
-        backgroundColor: 'blue'
+        backgroundColor: 'white'
       })
     }
 
